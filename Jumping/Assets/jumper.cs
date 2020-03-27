@@ -2,23 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class triggers : MonoBehaviour
+public class jumper : MonoBehaviour
 {
-    characterScript chars;
+    public characterScript chars;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-    public void OnTriggerExit(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         chars.jumpd = 3f;
         chars.isjumping = true;
+        StartCoroutine(returnnormal());
+        
+    }
+    IEnumerator returnnormal()
+    {
+        yield return new WaitForSeconds(1);
+        chars.jumpd = 1f;
     }
 }

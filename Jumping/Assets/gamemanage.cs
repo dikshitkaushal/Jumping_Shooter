@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class triggers : MonoBehaviour
+public class gamemanage : MonoBehaviour
 {
-    characterScript chars;
+    public coinlogic coin;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,10 +16,5 @@ public class triggers : MonoBehaviour
     void Update()
     {
         
-    }
-    public void OnTriggerExit(Collider other)
-    {
-        chars.jumpd = 3f;
-        chars.isjumping = true;
     }
 }

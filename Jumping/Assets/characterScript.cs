@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class characterScript : MonoBehaviour
 {
+    
     CharacterController m_charactercontroller;
     float m_horizontalaxis;
     float m_speed = 5f;
-    float jumpd = 1f;
+    public float jumpd = 1f;
     float gravity = 0.05f;
-    bool isjumping = false;
+    public bool isjumping = false;
     float m_verticalaxis;
     Vector3 total_move;
     Vector3 m_movement;
+    float vel = 10f;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +30,9 @@ public class characterScript : MonoBehaviour
         if(Input.GetButtonDown("Jump") && !isjumping)
         {
             isjumping = true;
+            m_movement.y = jumpd;
         }
+
     }
     private void FixedUpdate()
     {
@@ -39,7 +43,7 @@ public class characterScript : MonoBehaviour
             m_charactercontroller.Move(m_movement);
         }
         //controlling Gravity
-        if(!m_charactercontroller.isGrounded)
+        if (!m_charactercontroller.isGrounded)
         {
             if (m_movement.y > 0)
             {
@@ -55,7 +59,7 @@ public class characterScript : MonoBehaviour
             m_movement.y = 0;
         }
         //setting jumpheight to y
-        if(isjumping)
+        if (isjumping)
         {
             m_movement.y = jumpd;
             isjumping = false;
