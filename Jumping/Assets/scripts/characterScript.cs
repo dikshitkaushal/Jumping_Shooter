@@ -14,7 +14,6 @@ public class characterScript : MonoBehaviour
     float m_verticalaxis;
     Vector3 total_move;
     Vector3 m_movement;
-    float vel = 10f;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,10 +47,10 @@ public class characterScript : MonoBehaviour
     private void FixedUpdate()
     {
 
-        m_movement = total_move * m_speed * Time.deltaTime;
+        /* m_movement = total_move * m_speed * Time.deltaTime;*/
 
-        /*        m_movement.x = m_horizontalaxis * m_speed * Time.deltaTime;
-                m_movement.z = m_verticalaxis * m_speed * Time.deltaTime;*/
+        m_movement.z = m_horizontalaxis * m_speed * Time.deltaTime;
+        m_movement.x = -m_verticalaxis * m_speed * Time.deltaTime;
         /* if (total_move != Vector3.zero)
          {
              transform.forward = total_move.normalized;
