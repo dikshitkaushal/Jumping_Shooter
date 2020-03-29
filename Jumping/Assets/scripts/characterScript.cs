@@ -16,7 +16,9 @@ public class characterScript : MonoBehaviour
     Vector3 m_movement;
     GameObject m_equppedobject = null;
     GameObject m_interactableobject = null;
+    GameObject m_anotherinteractableobject = null;
     [SerializeField] Transform equipposition;
+    public bool haveweapon = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +31,7 @@ public class characterScript : MonoBehaviour
         m_horizontalaxis = Input.GetAxis("Horizontal");
         m_verticalaxis = Input.GetAxis("Vertical");
         total_move = new Vector3(-m_verticalaxis, 0, m_horizontalaxis);
-        Debug.Log(m_horizontalaxis);
+       
         if(Input.GetButtonDown("Jump") && !isjumping)
         {
             isjumping = true;
@@ -43,15 +45,16 @@ public class characterScript : MonoBehaviour
                 if (gun)
                 {
                     //sets the position of the gun
-                    m_interactableobject.transform.rotation = equipposition.rotation;
+                    m_interactableobject.transform.rotation=equipposition.rotation;
                     m_interactableobject.transform.position = equipposition.position;
                     m_interactableobject.transform.parent = gameObject.transform;
                     m_equppedobject = m_interactableobject;
+                    
                     //deactivate gravity and deactivate collider
                     gun.equip_weapon();
                 }
             }
-            else if (m_equppedobject)
+            else if (m_equppedobject==m_interactableobject)
             {
                 gun_logic gun = m_interactableobject.GetComponent<gun_logic>();
                 if (gun)
@@ -61,6 +64,30 @@ public class characterScript : MonoBehaviour
                     m_equppedobject = null;
                     //activate gravity and activate collider
                     gun.unequip_weapon();
+                }
+            }
+            else if(m_equppedobject!=m_interactableobject)
+            {
+                gun_logic gun = m_equppedobject.GetComponent<gun_logic>();
+                if (gun)
+                {
+                    //sets the position of the gun
+                    m_equppedobject.transform.parent = null;
+                    m_equppedobject = null;
+                    //activate gravity and activate collider
+                    gun.unequip_weapon();
+                }
+                gun_logic gunn = m_interactableobject.GetComponent<gun_logic>();
+                if (gunn)
+                {
+                    //sets the position of the gun
+                    m_interactableobject.transform.rotation = equipposition.rotation;
+                    m_interactableobject.transform.position = equipposition.position;
+                    m_interactableobject.transform.parent = gameObject.transform;
+                    m_equppedobject = m_interactableobject;
+
+                    //deactivate gravity and deactivate collider
+                    gunn.equip_weapon();
                 }
             }
         }
@@ -118,14 +145,16 @@ public class characterScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Weapon"))
+        if(other.CompareTag("Weapon") /*&& !haveweapon*/)
         {
             m_interactableobject = other.gameObject;
+            Debug.Log(m_interactableobject.transform.name);
         }
+     
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Weapon") && m_interactableobject==other.gameObject)
+        if (other.CompareTag("Weapon") && m_interactableobject == other.gameObject)
         {
             m_interactableobject = null;
         }
