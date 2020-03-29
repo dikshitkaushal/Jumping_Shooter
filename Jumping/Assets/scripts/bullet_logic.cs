@@ -15,7 +15,17 @@ public class bullet_logic : MonoBehaviour
             m_rigidbody.velocity = velocity * transform.up;
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("target"))
+        {
+            //destroy other.gameobject
+            Destroy(other.gameObject);
 
+            //destroy bullet
+            Destroy(gameObject);
+        }
+    }
     // Update is called once per frame
     void Update()
     {

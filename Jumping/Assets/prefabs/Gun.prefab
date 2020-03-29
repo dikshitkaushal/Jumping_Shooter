@@ -318,6 +318,12 @@ MonoBehaviour:
   m_bulletprefab: {fileID: 5240304284083098374, guid: fad671b28bd6b7349b365867881924d5,
     type: 3}
   m_bullet_spawnPoint: {fileID: 2685762329315398687}
+  bullet_ammo: {fileID: 6715602060987897536, guid: 163b65b2a9ebe7a45bbdf90d4d9b5516,
+    type: 3}
+  clips:
+  - {fileID: 8300000, guid: 04f28906deb3c114fa7765500e93629b, type: 3}
+  - {fileID: 8300000, guid: 904875a9dee99834caad6bfb053c7f9d, type: 3}
+  - {fileID: 8300000, guid: 321795b6c81b3e944a62b2c8114eaa05, type: 3}
 --- !u!1 &7727785332237434101
 GameObject:
   m_ObjectHideFlags: 0
