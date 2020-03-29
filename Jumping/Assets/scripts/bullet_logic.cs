@@ -5,7 +5,7 @@ using UnityEngine;
 public class bullet_logic : MonoBehaviour
 {
     Rigidbody m_rigidbody;
-    float velocity = 8.0f;
+    float velocity = 20.0f;
     // Start is called before the first frame update
     void Start()
     {

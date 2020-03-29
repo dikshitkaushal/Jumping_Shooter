@@ -14,6 +14,9 @@ public class characterScript : MonoBehaviour
     float m_verticalaxis;
     Vector3 total_move;
     Vector3 m_movement;
+    GameObject m_equppedobject = null;
+    GameObject m_interactableobject = null;
+    [SerializeField] Transform equipposition;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +34,35 @@ public class characterScript : MonoBehaviour
         {
             isjumping = true;
 
+        }
+        if (m_interactableobject && Input.GetButtonDown("Fire2"))
+        {
+            if (!m_equppedobject)
+            {
+                gun_logic gun = m_interactableobject.GetComponent<gun_logic>();
+                if (gun)
+                {
+                    //sets the position of the gun
+                    m_interactableobject.transform.rotation = equipposition.rotation;
+                    m_interactableobject.transform.position = equipposition.position;
+                    m_interactableobject.transform.parent = gameObject.transform;
+                    m_equppedobject = m_interactableobject;
+                    //deactivate gravity and deactivate collider
+                    gun.equip_weapon();
+                }
+            }
+            else if (m_equppedobject)
+            {
+                gun_logic gun = m_interactableobject.GetComponent<gun_logic>();
+                if (gun)
+                {
+                    //sets the position of the gun
+                    m_interactableobject.transform.parent = null;
+                    m_equppedobject = null;
+                    //activate gravity and activate collider
+                    gun.unequip_weapon();
+                }
+            }
         }
         
 
@@ -82,6 +114,20 @@ public class characterScript : MonoBehaviour
         {
             m_movement.y = jumpd;
             isjumping = false;
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Weapon"))
+        {
+            m_interactableobject = other.gameObject;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Weapon") && m_interactableobject==other.gameObject)
+        {
+            m_interactableobject = null;
         }
     }
 }

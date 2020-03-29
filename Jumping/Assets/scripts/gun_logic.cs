@@ -12,10 +12,15 @@ public class gun_logic : MonoBehaviour
     const float MAX_cooldown = 0.5f;
     float current_cooldown = 0;
     float bullet_count = 3f;
+    public bool isequpped = false;
+    Rigidbody m_rigidbody;
+    Collider m_collider;
     
     // Start is called before the first frame update
     void Start()
     {
+        m_rigidbody = GetComponent<Rigidbody>();
+        m_collider = GetComponent<Collider>();
         source = GetComponent<AudioSource>();
         setAmmo();
     }
@@ -32,6 +37,10 @@ public class gun_logic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!isequpped)
+        {
+            return;
+        }
         
         if (current_cooldown>0)
         {
@@ -62,5 +71,29 @@ public class gun_logic : MonoBehaviour
         bullet_count += 3f;
         setAmmo();
         playsound(2);
+    }
+    public void equip_weapon()
+    {
+        isequpped = true;
+        if(m_rigidbody)
+        {
+            m_rigidbody.useGravity = false;
+        }
+        if(m_collider)
+        {
+            m_collider.enabled = false;
+        }
+    }
+    public void unequip_weapon()
+    {
+        isequpped = false;
+        if (m_rigidbody)
+        {
+            m_rigidbody.useGravity = true;
+        }
+        if (m_collider)
+        {
+            m_collider.enabled = true;
+        }
     }
 }
