@@ -1,13 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class characterScript : MonoBehaviour
 {
     
     CharacterController m_charactercontroller;
     float m_horizontalaxis;
-    float m_speed = 5f;
+    float m_speed = 15f;
+    public Image healthbar;
+    public Text playerhealth;
+    float m_playerhealth = 100;
+    float m_maxhealth = 100;
     public float jumpd = 50f;
     float gravity = 0.05f;
     public bool isjumping = false;
@@ -24,7 +29,17 @@ public class characterScript : MonoBehaviour
     {
         m_charactercontroller = GetComponent<CharacterController>();    
     }
-
+    void currentplayerhealth()
+    {
+        playerhealth.text = "Health : " + m_playerhealth;
+       
+        healthbar.fillAmount = m_playerhealth/m_maxhealth;
+        if(m_playerhealth<=0)
+        {
+            //scene Reload
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -102,6 +117,11 @@ public class characterScript : MonoBehaviour
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(-angle, Vector3.up);
+    }
+    public void takedamage(int damage)
+    {
+        m_playerhealth -= damage;
+        currentplayerhealth();
     }
     private void FixedUpdate()
     {
