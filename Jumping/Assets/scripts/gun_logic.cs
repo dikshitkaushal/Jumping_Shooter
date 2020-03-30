@@ -19,6 +19,7 @@ public class gun_logic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        bullet_ammo.enabled = false;
         m_rigidbody = GetComponent<Rigidbody>();
         m_collider = GetComponent<Collider>();
         source = GetComponent<AudioSource>();
@@ -75,6 +76,7 @@ public class gun_logic : MonoBehaviour
     public void equip_weapon()
     {
         isequpped = true;
+        bullet_ammo.enabled = true;
         if(m_rigidbody)
         {
             m_rigidbody.useGravity = false;
@@ -86,6 +88,7 @@ public class gun_logic : MonoBehaviour
     }
     public void unequip_weapon()
     {
+        bullet_ammo.enabled = false;
         isequpped = false;
         if (m_rigidbody)
         {

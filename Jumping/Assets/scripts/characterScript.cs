@@ -85,7 +85,7 @@ public class characterScript : MonoBehaviour
                     m_interactableobject.transform.position = equipposition.position;
                     m_interactableobject.transform.parent = gameObject.transform;
                     m_equppedobject = m_interactableobject;
-
+                    gunn.refill_ammo();
                     //deactivate gravity and deactivate collider
                     gunn.equip_weapon();
                 }
